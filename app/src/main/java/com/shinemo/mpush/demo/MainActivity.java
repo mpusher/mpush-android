@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         Notifications.I.setSmallIcon(R.mipmap.ic_notification);
         Notifications.I.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
         String publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCghPCWCobG8nTD24juwSVataW7iViRxcTkey/B792VZEhuHjQvA3cAJgx2Lv8GnX8NIoShZtoCg3Cx6ecs+VEPD2fBcg2L4JK7xldGpOJ3ONEAyVsLOttXZtNXvyDZRijiErQALMTorcgi79M5uVX9/jMv2Ggb2XAeZhlLD28fHwIDAQAB";
-        String allocServer = "http://111.1.57.148/mpns/push/server";
+        String allocServer = "http://allot.mpush.com";
 
         ClientConfig cc = ClientConfig.build()
                 .setPublicKey(publicKey)
