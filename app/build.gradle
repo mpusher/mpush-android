@@ -9,7 +9,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.shinemo.mpush.android"
+        applicationId "com.mpush.android"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1

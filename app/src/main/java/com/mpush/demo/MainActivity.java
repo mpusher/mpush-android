@@ -1,4 +1,4 @@
-package com.shinemo.mpush.demo;
+package com.mpush.demo;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;
@@ -10,14 +10,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.shinemo.mpush.android.BuildConfig;
-import com.shinemo.mpush.android.MPush;
-import com.shinemo.mpush.android.MPushLog;
-import com.shinemo.mpush.android.Notifications;
-import com.shinemo.mpush.android.R;
-import com.shinemo.mpush.client.ClientConfig;
-
-import java.util.Random;
+import com.mpush.android.BuildConfig;
+import com.mpush.android.MPush;
+import com.mpush.android.MPushLog;
+import com.mpush.android.Notifications;
+import com.mpush.android.R;
+import com.mpush.client.ClientConfig;
 
 public class MainActivity extends AppCompatActivity {
 

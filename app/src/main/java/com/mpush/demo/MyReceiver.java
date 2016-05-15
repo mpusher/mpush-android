@@ -1,4 +1,4 @@
-package com.shinemo.mpush.demo;
+package com.mpush.demo;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.shinemo.mpush.android.MPushService;
-import com.shinemo.mpush.android.Notifications;
+import com.mpush.android.MPushService;
+import com.mpush.android.Notifications;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.shinemo.mpush.android;
+package com.mpush.android;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -10,7 +10,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.os.SystemClock;
 
-import com.shinemo.mpush.api.Constants;
+import com.mpush.api.Constants;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 
@@ -20,8 +20,8 @@ import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
  * @author ohun@live.cn
  */
 public final class MPushReceiver extends BroadcastReceiver {
-    public static final String ACTION_HEALTH_CHECK = "com.shinemo.mpush.HEALTH_CHECK";
-    public static final String ACTION_NOTIFY_CANCEL = "com.shinemo.mpush.NOTIFY_CANCEL";
+    public static final String ACTION_HEALTH_CHECK = "com.mpush.HEALTH_CHECK";
+    public static final String ACTION_NOTIFY_CANCEL = "com.mpush.NOTIFY_CANCEL";
     public static int delay = Constants.DEF_HEARTBEAT;
     public static State STATE = State.UNKNOWN;
 

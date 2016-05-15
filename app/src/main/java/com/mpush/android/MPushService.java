@@ -1,4 +1,4 @@
-package com.shinemo.mpush.android;
+package com.mpush.android;
 
 
 import android.app.Service;
@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import com.shinemo.mpush.api.Client;
-import com.shinemo.mpush.api.ClientListener;
+import com.mpush.android.BuildConfig;
+import com.mpush.api.Client;
+import com.mpush.api.ClientListener;
 
 /**
  * Created by yxx on 2016/2/13.
@@ -15,9 +16,9 @@ import com.shinemo.mpush.api.ClientListener;
  * @author ohun@live.cn
  */
 public final class MPushService extends Service implements ClientListener {
-    public static final String ACTION_MESSAGE_RECEIVED = "com.shinemo.mpush.MESSAGE_RECEIVED";
-    public static final String ACTION_NOTIFICATION_OPENED = "com.shinemo.mpush.NOTIFICATION_OPENED";
-    public static final String ACTION_KICK_USER = "com.shinemo.mpush.KICK_USER";
+    public static final String ACTION_MESSAGE_RECEIVED = "com.mpush.MESSAGE_RECEIVED";
+    public static final String ACTION_NOTIFICATION_OPENED = "com.mpush.NOTIFICATION_OPENED";
+    public static final String ACTION_KICK_USER = "com.mpush.KICK_USER";
     public static final String EXTRA_PUSH_MESSAGE = "push_message";
     public static final String EXTRA_USER_ID = "user_id";
     public static final String EXTRA_DEVICE_ID = "device_id";

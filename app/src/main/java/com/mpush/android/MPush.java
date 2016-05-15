@@ -1,4 +1,4 @@
-package com.shinemo.mpush.android;
+package com.mpush.android;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,13 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.Nullable;
 
-import com.shinemo.mpush.api.Client;
-import com.shinemo.mpush.api.ClientListener;
-import com.shinemo.mpush.api.Constants;
-import com.shinemo.mpush.api.http.HttpRequest;
-import com.shinemo.mpush.api.http.HttpResponse;
-import com.shinemo.mpush.client.ClientConfig;
-import com.shinemo.mpush.util.DefaultLogger;
+import com.mpush.api.Client;
+import com.mpush.api.ClientListener;
+import com.mpush.api.Constants;
+import com.mpush.api.http.HttpRequest;
+import com.mpush.api.http.HttpResponse;
+import com.mpush.client.ClientConfig;
+import com.mpush.util.DefaultLogger;
 
 import java.util.concurrent.Future;
 

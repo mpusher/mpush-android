@@ -1,8 +1,8 @@
-package com.shinemo.mpush.android;
+package com.mpush.android;
 
 import android.util.Log;
 
-import com.shinemo.mpush.api.Logger;
+import com.mpush.api.Logger;
 
 public final class MPushLog implements Logger {
     public static final String sTag = "MPUSH";

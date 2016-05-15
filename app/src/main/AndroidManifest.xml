@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.shinemo.mpush.android">
+    package="com.mpush.android">
 
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -21,7 +21,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.shinemo.mpush.demo.MainActivity">
+        <activity android:name="com.mpush.demo.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,30 +30,30 @@
         </activity>
 
         <receiver
-            android:name=".MPushReceiver"
+            android:name="com.mpush.android.MPushReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="com.shinemo.mpush.HEALTH_CHECK" />
-                <action android:name="com.shinemo.mpush.NOTIFY_CANCEL" />
+                <action android:name="com.mpush.HEALTH_CHECK" />
+                <action android:name="com.mpush.NOTIFY_CANCEL" />
             </intent-filter>
         </receiver>
 
         <service
-            android:name=".MPushService"
+            android:name="com.mpush.android.MPushService"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name="com.shinemo.mpush.demo.MyReceiver"
+            android:name="com.mpush.demo.MyReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.shinemo.mpush.MESSAGE_RECEIVED" />
-                <action android:name="com.shinemo.mpush.KICK_USER" />
+                <action android:name="com.mpush.MESSAGE_RECEIVED" />
+                <action android:name="com.mpush.KICK_USER" />
 
-                <category android:name="com.shinemo.mpush.android" />
+                <category android:name="com.mpush.android" />
             </intent-filter>
         </receiver>
     </application>

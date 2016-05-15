@@ -1,6 +1,6 @@
-package com.shinemo.mpush.demo;
+package com.mpush.demo;
 
-import com.shinemo.mpush.android.MPushMessage;
+import com.mpush.android.MPushMessage;
 
 import org.json.JSONObject;
 

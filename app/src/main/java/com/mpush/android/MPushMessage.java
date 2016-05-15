@@ -1,4 +1,4 @@
-package com.shinemo.mpush.android;
+package com.mpush.android;
 
 public interface MPushMessage {
 

@@ -1,8 +1,8 @@
-package com.shinemo.mpush.android;
+package com.mpush.android;
 
 import android.content.SharedPreferences;
 
-import com.shinemo.mpush.api.connection.SessionStorage;
+import com.mpush.api.connection.SessionStorage;
 
 /**
  * Created by yxx on 2016/2/15.
