@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startPush(View btn) {
-        MPush.I.startPush();
+        MPush.I.checkInit(this.getApplication()).startPush();
         Toast.makeText(this, "start push", Toast.LENGTH_SHORT).show();
     }
 
