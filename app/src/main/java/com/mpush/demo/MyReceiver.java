@@ -17,7 +17,8 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (MPushService.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-            String message = intent.getStringExtra(MPushService.EXTRA_PUSH_MESSAGE);
+            byte[] bytes = intent.getByteArrayExtra(MPushService.EXTRA_PUSH_MESSAGE);
+            String message = new String(bytes, "utf-8");
             Toast.makeText(context, "收到新的通知：" + message, Toast.LENGTH_SHORT).show();
             if (TextUtils.isEmpty(message)) return;
             NotificationDO ndo = null;
