@@ -1,6 +1,6 @@
 # mpush-android
-### 该项目包含Android SDK和 一个简单demo两部分
-### 配置建议直接copy工程中的`AndroidManifest.xml`文件
+* 该项目包含Android SDK和 一个简单demo两部分
+* 配置建议直接copy工程中的`AndroidManifest.xml`文件
 
 
 # Android SDK
