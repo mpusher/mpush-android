@@ -193,7 +193,15 @@ public final class MPush {
             }
         }
     }
-
+    
+    public boolean ack(int messageId) {
+        if (hasStarted() && client.isRunning()) {
+            client.ack(messageId);
+            return true;
+        }
+        return false;
+    }
+    
     public Future<HttpResponse> sendHttpProxy(HttpRequest request) {
         if (hasStarted() && client.isRunning()) {
             return client.sendHttp(request);

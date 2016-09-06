@@ -20,6 +20,7 @@ public final class MPushService extends Service implements ClientListener {
     public static final String ACTION_NOTIFICATION_OPENED = "com.mpush.NOTIFICATION_OPENED";
     public static final String ACTION_KICK_USER = "com.mpush.KICK_USER";
     public static final String EXTRA_PUSH_MESSAGE = "push_message";
+    public static final String EXTRA_PUSH_MESSAGE_ID = "push_message_id";
     public static final String EXTRA_USER_ID = "user_id";
     public static final String EXTRA_DEVICE_ID = "device_id";
 
@@ -54,10 +55,11 @@ public final class MPushService extends Service implements ClientListener {
     }
 
     @Override
-    public void onReceivePush(Client client, byte[] content) {
+    public void onReceivePush(Client client, byte[] content, int messageId) {
         sendBroadcast(new Intent(ACTION_MESSAGE_RECEIVED)
                 .addCategory(BuildConfig.APPLICATION_ID)
                 .putExtra(EXTRA_PUSH_MESSAGE, content)
+                .putExtra(EXTRA_PUSH_MESSAGE_ID, messageId)
         );
     }
 
