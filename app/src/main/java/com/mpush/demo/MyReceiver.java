@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.mpush.android.MPush;
 import com.mpush.android.MPushService;
 import com.mpush.android.Notifications;
+import com.mpush.api.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,9 +21,9 @@ public class MyReceiver extends BroadcastReceiver {
         if (MPushService.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             byte[] bytes = intent.getByteArrayExtra(MPushService.EXTRA_PUSH_MESSAGE);
             int messageId = intent.getIntExtra(MPushService.EXTRA_PUSH_MESSAGE_ID, 0);
-            String message = new String(bytes, "utf-8");
+            String message = new String(bytes, Constants.UTF_8);
             Toast.makeText(context, "收到新的通知：" + message, Toast.LENGTH_SHORT).show();
-            if (messageId > 0) MPush.ack(messageId);
+            if (messageId > 0) MPush.I.ack(messageId);
             if (TextUtils.isEmpty(message)) return;
             NotificationDO ndo = null;
             try {
@@ -36,7 +37,7 @@ public class MyReceiver extends BroadcastReceiver {
                 Intent it = new Intent(context, MyReceiver.class);
                 it.setAction(MPushService.ACTION_NOTIFICATION_OPENED);
                 it.putExtra("my_extra", ndo.getExtras().toString());
-                if (ndo.getTitle() == null) ndo.setTitle("Mpush");
+                if (ndo.getTitle() == null) ndo.setTitle("MPush");
                 if (ndo.getTicker() == null) ndo.setTicker(ndo.getTitle());
                 if (ndo.getContent() == null) ndo.setContent(ndo.getTitle());
                 Notifications.I.notify(ndo, it);

@@ -18,19 +18,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Http://" />
+        <EditText
+            android:id="@+id/alloc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="alloc服务接口地址ip:port"
+            />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UserId:" />
         <EditText
             android:id="@+id/userId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="test1" />
+            android:text="user-0"
+            android:hint="要绑定的用户ID"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="bindUser"
-            android:text="bind User" />
     </LinearLayout>
 
     <Button
@@ -38,6 +54,18 @@
         android:layout_height="wrap_content"
         android:onClick="startPush"
         android:text="start push" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="bindUser"
+        android:text="bind User" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="unbindUser"
+        android:text="unbind user" />
 
     <Button
         android:layout_width="match_parent"
@@ -57,9 +85,5 @@
         android:onClick="resumePush"
         android:text="resume push" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="unbindUser"
-        android:text="unbind user" />
+
 </LinearLayout>

@@ -167,7 +167,7 @@ public final class MPush {
     /**
      * 绑定账号
      *
-     * @param userId
+     * @param userId 要绑定的账号
      */
     public void bindAccount(String userId) {
         if (hasInit()) {
@@ -193,7 +193,13 @@ public final class MPush {
             }
         }
     }
-    
+
+    /**
+     * 发送ACK
+     *
+     * @param messageId 要ACK的消息ID
+     * @return
+     */
     public boolean ack(int messageId) {
         if (hasStarted() && client.isRunning()) {
             client.ack(messageId);

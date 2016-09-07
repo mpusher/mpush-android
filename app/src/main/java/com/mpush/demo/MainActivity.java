@@ -23,17 +23,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initPush();
-    }
-
-    private void initPush() {
         Notifications.I.init(this.getApplicationContext());
         Notifications.I.setSmallIcon(R.mipmap.ic_notification);
         Notifications.I.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+    }
+
+    private void initPush(String allocServer, String userId) {
         //公钥有服务端提供和私钥对应
         String publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCghPCWCobG8nTD24juwSVataW7iViRxcTkey/B792VZEhuHjQvA3cAJgx2Lv8GnX8NIoShZtoCg3Cx6ecs+VEPD2fBcg2L4JK7xldGpOJ3ONEAyVsLOttXZtNXvyDZRijiErQALMTorcgi79M5uVX9/jMv2Ggb2XAeZhlLD28fHwIDAQAB";
-        //这个要改成自己具体的地址
-        String allocServer = "http://allot.mpush.com";
 
         ClientConfig cc = ClientConfig.build()
                 .setPublicKey(publicKey)
@@ -42,10 +39,8 @@ public class MainActivity extends AppCompatActivity {
                 .setClientVersion(BuildConfig.VERSION_NAME)
                 .setLogger(new MPushLog())
                 .setLogEnabled(BuildConfig.DEBUG)
-                .setUserId("test1");
-        MPush.I.init(getApplicationContext());
-        MPush.I.setClientConfig(cc);
-        MPush.I.startPush();
+                .setUserId(userId);
+        MPush.I.checkInit(getApplicationContext()).setClientConfig(cc);
     }
 
     private String getDeviceId() {
@@ -67,6 +62,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startPush(View btn) {
+        EditText et = (EditText) findViewById(R.id.alloc);
+        String allocServer = et.getText().toString().trim();
+
+        if (TextUtils.isEmpty(allocServer)) {
+            Toast.makeText(this, "请填写正确的alloc地址", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!allocServer.startsWith("http://")) {
+            allocServer = "http://" + allocServer;
+        }
+
+
+        EditText etUser = (EditText) findViewById(R.id.userId);
+        String userId = etUser.getText().toString().trim();
+
+        initPush(allocServer, userId);
+
         MPush.I.checkInit(this.getApplication()).startPush();
         Toast.makeText(this, "start push", Toast.LENGTH_SHORT).show();
     }
