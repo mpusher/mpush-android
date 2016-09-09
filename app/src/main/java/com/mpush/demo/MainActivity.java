@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -30,6 +31,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Handler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -135,12 +137,17 @@ public class MainActivity extends AppCompatActivity {
         request.setTimeout((int) TimeUnit.SECONDS.toMillis(10));
         request.setCallback(new HttpCallback() {
             @Override
-            public void onResponse(HttpResponse httpResponse) {
-                if (httpResponse.statusCode == 200) {
-                    Toast.makeText(context, new String(httpResponse.body, Constants.UTF_8), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, httpResponse.reasonPhrase, Toast.LENGTH_SHORT).show();
-                }
+            public void onResponse(final HttpResponse httpResponse) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (httpResponse.statusCode == 200) {
+                            Toast.makeText(context, new String(httpResponse.body, Constants.UTF_8), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, httpResponse.reasonPhrase, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
 
             @Override
