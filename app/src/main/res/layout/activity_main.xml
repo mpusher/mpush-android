@@ -21,13 +21,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Http://" />
+            android:text="Allocator:" />
         <EditText
             android:id="@+id/alloc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="alloc服务接口地址ip:port"
+            android:text="http://103.246.161.44:9999"
             />
 
     </LinearLayout>
