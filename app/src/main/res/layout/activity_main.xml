@@ -49,11 +49,33 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello:" />
+        <EditText
+            android:id="@+id/httpProxy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="http proxy and push test"/>
+
+    </LinearLayout>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="startPush"
         android:text="start push" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="stopPush"
+        android:text="stop push" />
 
     <Button
         android:layout_width="match_parent"
@@ -70,8 +92,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="stopPush"
-        android:text="stop push" />
+        android:onClick="sendPush"
+        android:text="send push" />
 
     <Button
         android:layout_width="match_parent"

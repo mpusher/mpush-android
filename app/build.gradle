@@ -4,6 +4,21 @@ repositories {
     mavenLocal()
 }
 
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+}
+
+
+project.ext {
+    channels = [
+            "mpush": "MPushDemo"
+    ]
+}
+
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -21,10 +36,58 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors.whenObjectAdded { flavor ->
+        flavor.extensions.create("channel", StringExtension, "")
+    }
+
+
+    productFlavors {
+        //多渠道配置
+        if (project.hasProperty("channels")) {
+            getChannelFlavors().each { name, config ->
+                "$name" {
+                    channel.value = config.channel
+                }
+            }
+        } else {
+            println "===> Not found channel list !"
+        }
+    }
+
+   applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                output.outputFile = new File(outputFile.parent, "MPushDemo.apk")
+            }
+        }
+    }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
+def getChannelFlavors() {
+    def flavors = [:]
+    channels.each { item ->
+        println "Got channel id: " + item.value
+        flavors.put(item.value, [
+                channel: item.key
+        ])
+    }
+    return flavors;
+}
+
+class StringExtension {
+    String value
+
+    StringExtension(String value) {
+        this.value = value
+    }
+
+    public void setValue(String value) {
+        this.value = value
+    }
+
+    public String getValue() {
+        return value
+    }
 }

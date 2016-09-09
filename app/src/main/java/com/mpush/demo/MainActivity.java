@@ -1,6 +1,8 @@
 package com.mpush.demo;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +17,19 @@ import com.mpush.android.MPush;
 import com.mpush.android.MPushLog;
 import com.mpush.android.Notifications;
 import com.mpush.android.R;
+import com.mpush.api.Constants;
+import com.mpush.api.http.HttpCallback;
+import com.mpush.api.http.HttpMethod;
+import com.mpush.api.http.HttpRequest;
+import com.mpush.api.http.HttpResponse;
 import com.mpush.client.ClientConfig;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
         Notifications.I.init(this.getApplicationContext());
         Notifications.I.setSmallIcon(R.mipmap.ic_notification);
         Notifications.I.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        SharedPreferences sp = this.getSharedPreferences("mpush.cfg", Context.MODE_PRIVATE);
+        String alloc = sp.getString("allotServer", null);
+        if (alloc != null) {
+            EditText et = (EditText) findViewById(R.id.alloc);
+            et.setText(alloc);
+        }
     }
 
     private void initPush(String allocServer, String userId) {
@@ -39,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 .setClientVersion(BuildConfig.VERSION_NAME)
                 .setLogger(new MPushLog())
                 .setLogEnabled(BuildConfig.DEBUG)
+                .setEnableHttpProxy(true)
                 .setUserId(userId);
         MPush.I.checkInit(getApplicationContext()).setClientConfig(cc);
     }
@@ -82,6 +103,52 @@ public class MainActivity extends AppCompatActivity {
 
         MPush.I.checkInit(this.getApplication()).startPush();
         Toast.makeText(this, "start push", Toast.LENGTH_SHORT).show();
+    }
+
+    public void sendPush(View btn) throws Exception {
+        EditText et1 = (EditText) findViewById(R.id.alloc);
+        String allocServer = et1.getText().toString().trim();
+
+        if (TextUtils.isEmpty(allocServer)) {
+            Toast.makeText(this, "请填写正确的alloc地址", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!allocServer.startsWith("http://")) {
+            allocServer = "http://" + allocServer;
+        }
+
+        EditText etUser = (EditText) findViewById(R.id.userId);
+        String userId = etUser.getText().toString().trim();
+
+        EditText et2 = (EditText) findViewById(R.id.httpProxy);
+        String hello = et2.getText().toString().trim();
+        if (TextUtils.isEmpty(hello)) hello = "client hello";
+        JSONObject params = new JSONObject();
+        params.put("userId", userId);
+        params.put("hello", hello);
+
+        final Context context = this.getApplicationContext();
+        HttpRequest request = new HttpRequest(HttpMethod.POST, allocServer + "/push");
+        byte[] body = params.toString().getBytes(Constants.UTF_8);
+        request.setBody(body, "application/json; charset=utf-8");
+        request.setTimeout((int) TimeUnit.SECONDS.toMillis(10));
+        request.setCallback(new HttpCallback() {
+            @Override
+            public void onResponse(HttpResponse httpResponse) {
+                if (httpResponse.statusCode == 200) {
+                    Toast.makeText(context, new String(httpResponse.body, Constants.UTF_8), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, httpResponse.reasonPhrase, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+        });
+        MPush.I.sendHttpProxy(request);
     }
 
     public void stopPush(View btn) {

@@ -36,7 +36,7 @@ public class MyReceiver extends BroadcastReceiver {
             if (ndo != null) {
                 Intent it = new Intent(context, MyReceiver.class);
                 it.setAction(MPushService.ACTION_NOTIFICATION_OPENED);
-                it.putExtra("my_extra", ndo.getExtras().toString());
+                if (ndo.getExtras() != null) it.putExtra("my_extra", ndo.getExtras().toString());
                 if (ndo.getTitle() == null) ndo.setTitle("MPush");
                 if (ndo.getTicker() == null) ndo.setTicker(ndo.getTitle());
                 if (ndo.getContent() == null) ndo.setContent(ndo.getTitle());
