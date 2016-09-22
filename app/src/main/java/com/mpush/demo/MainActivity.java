@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAllotServer(allocServer)
                 .setDeviceId(getDeviceId())
                 .setClientVersion(BuildConfig.VERSION_NAME)
-                .setLogger(new MPushLog())
+                .setLogger(new MyLog(this, (EditText) findViewById(R.id.log)))
                 .setLogEnabled(BuildConfig.DEBUG)
                 .setEnableHttpProxy(true)
                 .setUserId(userId);
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bindUser(View btn) {
-        EditText et = (EditText) findViewById(R.id.userId);
+        EditText et = (EditText) findViewById(R.id.from);
         String userId = et.getText().toString().trim();
         if (!TextUtils.isEmpty(userId)) {
             MPush.I.bindAccount(userId);
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        EditText etUser = (EditText) findViewById(R.id.userId);
+        EditText etUser = (EditText) findViewById(R.id.from);
         String userId = etUser.getText().toString().trim();
 
         initPush(allocServer, userId);
@@ -120,15 +120,20 @@ public class MainActivity extends AppCompatActivity {
             allocServer = "http://" + allocServer;
         }
 
-        EditText etUser = (EditText) findViewById(R.id.userId);
-        String userId = etUser.getText().toString().trim();
+        EditText toET = (EditText) findViewById(R.id.to);
+        String to = toET.getText().toString().trim();
 
-        EditText et2 = (EditText) findViewById(R.id.httpProxy);
-        String hello = et2.getText().toString().trim();
-        if (TextUtils.isEmpty(hello)) hello = "client hello";
+        EditText fromET = (EditText) findViewById(R.id.from);
+        String from = fromET.getText().toString().trim();
+
+        EditText helloET = (EditText) findViewById(R.id.httpProxy);
+        String hello = helloET.getText().toString().trim();
+
+        if (TextUtils.isEmpty(hello)) hello = "hello";
+
         JSONObject params = new JSONObject();
-        params.put("userId", userId);
-        params.put("hello", hello);
+        params.put("userId", to);
+        params.put("hello", from + " say:" + hello);
 
         final Context context = this.getApplicationContext();
         HttpRequest request = new HttpRequest(HttpMethod.POST, allocServer + "/push");

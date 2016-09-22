@@ -13,100 +13,137 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello Mpush!" />
+        android:text="Hello MPush" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Allocator:" />
+
         <EditText
             android:id="@+id/alloc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="alloc服务接口地址ip:port"
-            android:text="http://103.246.161.44:9999"
-            />
+            android:text="http://103.246.161.44:9999" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UserId:" />
+            android:text="from:" />
+
         <EditText
-            android:id="@+id/userId"
+            android:id="@+id/from"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="user-0"
-            android:hint="要绑定的用户ID"/>
+            android:hint="要绑定的用户ID"
+            android:text="user-0" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="bindUser"
+            android:text="bind" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="unbindUser"
+            android:text="unbind" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello:" />
+            android:text="to:" />
+
+        <EditText
+            android:id="@+id/to"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="要绑定的用户ID"
+            android:text="user-0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="say:" />
+
         <EditText
             android:id="@+id/httpProxy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="http proxy and push test"/>
+            android:text="hello" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="sendPush"
+            android:text="send" />
 
     </LinearLayout>
 
-    <Button
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="startPush"
+            android:text="start" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="stopPush"
+            android:text="stop" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="pausePush"
+            android:text="pause" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="resumePush"
+            android:text="resume" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/log"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="startPush"
-        android:text="start push" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="stopPush"
-        android:text="stop push" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="bindUser"
-        android:text="bind User" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="unbindUser"
-        android:text="unbind user" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="sendPush"
-        android:text="send push" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="pausePush"
-        android:text="pause push" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="resumePush"
-        android:text="resume push" />
-
+        android:hint="log:"
+        android:minLines="20"
+        android:scrollbars="vertical" />
 
 </LinearLayout>
