@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mpush.android">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -31,7 +31,7 @@
         </activity>
 
         <receiver
-            android:name="com.mpush.android.MPushReceiver"
+            android:name=".MPushReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -42,9 +42,10 @@
         </receiver>
 
         <service
-            android:name="com.mpush.android.MPushService"
+            android:name=".MPushService"
             android:enabled="true"
             android:exported="true" />
+        <service android:name=".MPushFakeService" />
 
         <receiver
             android:name="com.mpush.demo.MyReceiver"
