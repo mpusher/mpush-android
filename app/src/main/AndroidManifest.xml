@@ -54,7 +54,7 @@
             <intent-filter>
                 <action android:name="com.mpush.MESSAGE_RECEIVED" />
                 <action android:name="com.mpush.KICK_USER" />
-
+                <!--此值要改为自己的应用的applicationId  @see MPushService-->
                 <category android:name="com.mpush.android" />
             </intent-filter>
         </receiver>
