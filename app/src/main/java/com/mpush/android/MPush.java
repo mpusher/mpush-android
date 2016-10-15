@@ -31,6 +31,7 @@ import com.mpush.api.ClientListener;
 import com.mpush.api.Constants;
 import com.mpush.api.http.HttpRequest;
 import com.mpush.api.http.HttpResponse;
+import com.mpush.api.push.PushContext;
 import com.mpush.client.ClientConfig;
 import com.mpush.util.DefaultLogger;
 
@@ -227,7 +228,39 @@ public final class MPush {
         }
         return false;
     }
-    
+
+    /**
+     * 发送Push到服务端
+     *
+     * @param context Push上下文
+     * @return
+     */
+    public Future<Boolean> sendPush(PushContext context) {
+        if (hasStarted() && client.isRunning()) {
+            return client.push(context);
+        }
+        return null;
+    }
+
+    /**
+     * 发送Push到服务端, 不需要ACK
+     *
+     * @param content 要推送的数据
+     * @return
+     */
+    public Future<Boolean> sendPush(byte[] content) {
+        if (hasStarted() && client.isRunning()) {
+            return client.push(PushContext.build(content));
+        }
+        return null;
+    }
+
+    /**
+     * 发送Http代理请求
+     *
+     * @param request 要代理的http请求
+     * @return
+     */
     public Future<HttpResponse> sendHttpProxy(HttpRequest request) {
         if (hasStarted() && client.isRunning()) {
             return client.sendHttp(request);
