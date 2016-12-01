@@ -41,10 +41,17 @@ public final class MPushService extends Service implements ClientListener {
     public static final String ACTION_MESSAGE_RECEIVED = "com.mpush.MESSAGE_RECEIVED";
     public static final String ACTION_NOTIFICATION_OPENED = "com.mpush.NOTIFICATION_OPENED";
     public static final String ACTION_KICK_USER = "com.mpush.KICK_USER";
+    public static final String ACTION_CONNECTIVITY_CHANGE = "com.mpush.CONNECTIVITY_CHANGE";
+    public static final String ACTION_HANDSHAKE_OK = "com.mpush.HANDSHAKE_OK";
+    public static final String ACTION_BIND_USER = "com.mpush.BIND_USER";
+    public static final String ACTION_UNBIND_USER = "com.mpush.UNBIND_USER";
     public static final String EXTRA_PUSH_MESSAGE = "push_message";
     public static final String EXTRA_PUSH_MESSAGE_ID = "push_message_id";
     public static final String EXTRA_USER_ID = "user_id";
     public static final String EXTRA_DEVICE_ID = "device_id";
+    public static final String EXTRA_BIND_RET = "bind_ret";
+    public static final String EXTRA_CONNECT_STATE = "connect_state";
+    public static final String EXTRA_HEARTBEAT = "heartbeat";
     private int SERVICE_START_DELAYED = 5;
 
     @Nullable
@@ -132,17 +139,46 @@ public final class MPushService extends Service implements ClientListener {
     }
 
     @Override
-    public void onConnected(Client client) {
+    public void onBind(boolean success, String userId) {
+        sendBroadcast(new Intent(ACTION_BIND_USER)
+                .addCategory(BuildConfig.APPLICATION_ID)
+                .putExtra(EXTRA_BIND_RET, success)
+                .putExtra(EXTRA_USER_ID, userId)
+        );
+    }
 
+    @Override
+    public void onUnbind(boolean success, String userId) {
+        sendBroadcast(new Intent(ACTION_UNBIND_USER)
+                .addCategory(BuildConfig.APPLICATION_ID)
+                .putExtra(EXTRA_BIND_RET, success)
+                .putExtra(EXTRA_USER_ID, userId)
+        );
+    }
+
+    @Override
+    public void onConnected(Client client) {
+        sendBroadcast(new Intent(ACTION_CONNECTIVITY_CHANGE)
+                .addCategory(BuildConfig.APPLICATION_ID)
+                .putExtra(EXTRA_CONNECT_STATE, true)
+        );
     }
 
     @Override
     public void onDisConnected(Client client) {
         MPushReceiver.cancelAlarm(this);
+        sendBroadcast(new Intent(ACTION_CONNECTIVITY_CHANGE)
+                .addCategory(BuildConfig.APPLICATION_ID)
+                .putExtra(EXTRA_CONNECT_STATE, false)
+        );
     }
 
     @Override
     public void onHandshakeOk(Client client, int heartbeat) {
         MPushReceiver.startAlarm(this, heartbeat - 1000);
+        sendBroadcast(new Intent(ACTION_HANDSHAKE_OK)
+                .addCategory(BuildConfig.APPLICATION_ID)
+                .putExtra(EXTRA_HEARTBEAT, heartbeat)
+        );
     }
 }

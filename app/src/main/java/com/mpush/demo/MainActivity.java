@@ -30,6 +30,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         EditText et = (EditText) findViewById(R.id.from);
         String userId = et.getText().toString().trim();
         if (!TextUtils.isEmpty(userId)) {
-            MPush.I.bindAccount(userId);
+            MPush.I.bindAccount(userId, "mpush:" + (int) (Math.random() * 10));
         }
     }
 

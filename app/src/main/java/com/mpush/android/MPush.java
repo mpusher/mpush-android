@@ -52,6 +52,7 @@ public final class MPush {
     private static final String SP_KEY_PK = "publicKey";
     private static final String SP_KEY_AS = "allotServer";
     private static final String SP_KEY_AT = "account";
+    private static final String SP_KEY_TG = "tags";
     private static final String SP_KEY_LG = "log";
     public static MPush I = I();
     private Context ctx;
@@ -81,7 +82,7 @@ public final class MPush {
      * @param context
      */
     public void init(Context context) {
-        ctx = context;
+        ctx = context.getApplicationContext();
         sp = ctx.getSharedPreferences(SP_FILE_NAME, Context.MODE_PRIVATE);
     }
 
@@ -145,6 +146,10 @@ public final class MPush {
         if (clientConfig.getUserId() != null) {
             editor.putString(SP_KEY_AT, clientConfig.getUserId());
         }
+
+        if (clientConfig.getTags() != null) {
+            editor.putString(SP_KEY_TG, clientConfig.getTags());
+        }
         editor.apply();
         this.clientConfig = clientConfig;
     }
@@ -186,15 +191,25 @@ public final class MPush {
     }
 
     /**
+     * 设置网络状态推送服务
+     */
+    public void onNetStateChange(boolean isConnected) {
+        if (hasStarted()) {
+            client.onNetStateChange(isConnected);
+        }
+    }
+
+    /**
      * 绑定账号
      *
      * @param userId 要绑定的账号
      */
-    public void bindAccount(String userId) {
+    public void bindAccount(String userId, String tags) {
         if (hasInit()) {
             sp.edit().putString(SP_KEY_AT, userId).apply();
+            sp.edit().putString(SP_KEY_TG, tags).apply();
             if (hasStarted() && client.isRunning()) {
-                client.bindUser(userId);
+                client.bindUser(userId, tags);
             } else if (clientConfig != null) {
                 clientConfig.setUserId(userId);
             }
@@ -308,6 +323,10 @@ public final class MPush {
 
         if (clientConfig.getUserId() == null) {
             clientConfig.setUserId(sp.getString(SP_KEY_AT, null));
+        }
+
+        if (clientConfig.getTags() == null) {
+            clientConfig.setTags(sp.getString(SP_KEY_TG, null));
         }
 
         if (clientConfig.getLogger() instanceof DefaultLogger) {

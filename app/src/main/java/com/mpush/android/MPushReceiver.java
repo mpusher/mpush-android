@@ -61,7 +61,9 @@ public final class MPushReceiver extends BroadcastReceiver {
                 if (STATE != State.CONNECTED) {
                     STATE = State.CONNECTED;
                     if (MPush.I.hasStarted()) {
-                        MPush.I.resumePush();
+                        MPush.I.onNetStateChange(true);
+
+                        //MPush.I.resumePush();
                     } else {
                         MPush.I.checkInit(context).startPush();
                     }
@@ -69,8 +71,10 @@ public final class MPushReceiver extends BroadcastReceiver {
             } else {
                 if (STATE != State.DISCONNECTED) {
                     STATE = State.DISCONNECTED;
-                    MPush.I.pausePush();
-                    cancelAlarm(context);//防止特殊场景下alarm没被取消
+                    MPush.I.onNetStateChange(false);
+
+                    //MPush.I.pausePush();
+                    //cancelAlarm(context);//防止特殊场景下alarm没被取消
                 }
             }
         } else if (ACTION_NOTIFY_CANCEL.equals(action)) {//处理通知取消

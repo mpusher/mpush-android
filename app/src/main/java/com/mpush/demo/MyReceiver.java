@@ -37,9 +37,9 @@ public class MyReceiver extends BroadcastReceiver {
                 Intent it = new Intent(context, MyReceiver.class);
                 it.setAction(MPushService.ACTION_NOTIFICATION_OPENED);
                 if (ndo.getExtras() != null) it.putExtra("my_extra", ndo.getExtras().toString());
-                if (ndo.getTitle() == null) ndo.setTitle("MPush");
-                if (ndo.getTicker() == null) ndo.setTicker(ndo.getTitle());
-                if (ndo.getContent() == null) ndo.setContent(ndo.getTitle());
+                if (TextUtils.isEmpty(ndo.getTitle())) ndo.setTitle("MPush");
+                if (TextUtils.isEmpty(ndo.getTicker())) ndo.setTicker(ndo.getTitle());
+                if (TextUtils.isEmpty(ndo.getContent())) ndo.setContent(ndo.getTitle());
                 Notifications.I.notify(ndo, it);
             }
         } else if (MPushService.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
@@ -48,6 +48,24 @@ public class MyReceiver extends BroadcastReceiver {
             Toast.makeText(context, "通知被点击了， extras=" + extras, Toast.LENGTH_SHORT).show();
         } else if (MPushService.ACTION_KICK_USER.equals(intent.getAction())) {
             Toast.makeText(context, "用户被踢下线了", Toast.LENGTH_SHORT).show();
+        } else if (MPushService.ACTION_BIND_USER.equals(intent.getAction())) {
+            Toast.makeText(context, "绑定用户:"
+                            + intent.getStringExtra(MPushService.EXTRA_USER_ID)
+                            + (intent.getBooleanExtra(MPushService.EXTRA_BIND_RET, false) ? "成功" : "失败")
+                    , Toast.LENGTH_SHORT).show();
+        } else if (MPushService.ACTION_UNBIND_USER.equals(intent.getAction())) {
+            Toast.makeText(context, "解绑用户:"
+                            + (intent.getBooleanExtra(MPushService.EXTRA_BIND_RET, false) ? "成功" : "失败")
+                    , Toast.LENGTH_SHORT).show();
+        } else if (MPushService.ACTION_CONNECTIVITY_CHANGE.equals(intent.getAction())) {
+            Toast.makeText(context,
+                    intent.getBooleanExtra(MPushService.EXTRA_CONNECT_STATE, false)
+                            ? "MPUSH连接建立成功"
+                            : "MPUSH连接断开"
+                    , Toast.LENGTH_SHORT).show();
+        } else if (MPushService.ACTION_HANDSHAKE_OK.equals(intent.getAction())) {
+            Toast.makeText(context, "MPUSH握手成功, 心跳:" + intent.getIntExtra(MPushService.EXTRA_HEARTBEAT, 0)
+                    , Toast.LENGTH_SHORT).show();
         }
     }
 
