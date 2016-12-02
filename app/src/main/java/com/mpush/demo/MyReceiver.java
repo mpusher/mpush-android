@@ -11,7 +11,6 @@ import com.mpush.android.MPushService;
 import com.mpush.android.Notifications;
 import com.mpush.api.Constants;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MyReceiver extends BroadcastReceiver {
@@ -22,17 +21,15 @@ public class MyReceiver extends BroadcastReceiver {
             byte[] bytes = intent.getByteArrayExtra(MPushService.EXTRA_PUSH_MESSAGE);
             int messageId = intent.getIntExtra(MPushService.EXTRA_PUSH_MESSAGE_ID, 0);
             String message = new String(bytes, Constants.UTF_8);
+
             Toast.makeText(context, "收到新的通知：" + message, Toast.LENGTH_SHORT).show();
+
             if (messageId > 0) MPush.I.ack(messageId);
+
             if (TextUtils.isEmpty(message)) return;
-            NotificationDO ndo = null;
-            try {
-                JSONObject messageDO = new JSONObject(message);
-                if (messageDO == null) return;
-                ndo = fromJson(messageDO.optString("content"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+            NotificationDO ndo = fromJson(message);
+
             if (ndo != null) {
                 Intent it = new Intent(context, MyReceiver.class);
                 it.setAction(MPushService.ACTION_NOTIFICATION_OPENED);
@@ -55,11 +52,12 @@ public class MyReceiver extends BroadcastReceiver {
                     , Toast.LENGTH_SHORT).show();
         } else if (MPushService.ACTION_UNBIND_USER.equals(intent.getAction())) {
             Toast.makeText(context, "解绑用户:"
-                            + (intent.getBooleanExtra(MPushService.EXTRA_BIND_RET, false) ? "成功" : "失败")
+                            + (intent.getBooleanExtra(MPushService.EXTRA_BIND_RET, false)
+                            ? "成功"
+                            : "失败")
                     , Toast.LENGTH_SHORT).show();
         } else if (MPushService.ACTION_CONNECTIVITY_CHANGE.equals(intent.getAction())) {
-            Toast.makeText(context,
-                    intent.getBooleanExtra(MPushService.EXTRA_CONNECT_STATE, false)
+            Toast.makeText(context, intent.getBooleanExtra(MPushService.EXTRA_CONNECT_STATE, false)
                             ? "MPUSH连接建立成功"
                             : "MPUSH连接断开"
                     , Toast.LENGTH_SHORT).show();
@@ -69,14 +67,22 @@ public class MyReceiver extends BroadcastReceiver {
         }
     }
 
-    private NotificationDO fromJson(String json) throws JSONException {
-        JSONObject jo = new JSONObject(json);
-        NotificationDO ndo = new NotificationDO();
-        ndo.setContent(jo.optString("content"));
-        ndo.setTitle(jo.optString("title"));
-        ndo.setTicker(jo.optString("ticker"));
-        ndo.setNid(jo.optInt("nid", 1));
-        ndo.setExtras(jo.optJSONObject("extras"));
-        return ndo;
+    private NotificationDO fromJson(String message) {
+        try {
+            JSONObject messageDO = new JSONObject(message);
+            if (messageDO != null) {
+                JSONObject jo = new JSONObject(messageDO.optString("content"));
+                NotificationDO ndo = new NotificationDO();
+                ndo.setContent(jo.optString("content"));
+                ndo.setTitle(jo.optString("title"));
+                ndo.setTicker(jo.optString("ticker"));
+                ndo.setNid(jo.optInt("nid", 1));
+                ndo.setExtras(jo.optJSONObject("extras"));
+                return ndo;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
