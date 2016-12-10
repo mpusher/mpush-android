@@ -13,7 +13,7 @@ dependencies {
 
 project.ext {
     channels = [
-            "mpush": "MPushDemo"
+            "mpush":"MPushDemo"
     ]
 }
 

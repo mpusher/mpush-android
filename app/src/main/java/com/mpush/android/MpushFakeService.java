@@ -23,7 +23,6 @@ package com.mpush.android;
 import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Build;
 import android.os.IBinder;
 
 /**
