@@ -88,8 +88,8 @@ public final class Notifications {
         Intent cancelIT = new Intent(MPushReceiver.ACTION_NOTIFY_CANCEL);
         cancelIT.putExtra(EXTRA_MESSAGE_ID, nid);
         clickIT.putExtra(EXTRA_MESSAGE_ID, nid);
-        PendingIntent clickPI = PendingIntent.getBroadcast(context, 0, clickIT, 0);//处理点击
-        PendingIntent cancelPI = PendingIntent.getBroadcast(context, 0, cancelIT, 0);//处理滑动取消
+        PendingIntent clickPI = PendingIntent.getBroadcast(context, 0, clickIT, PendingIntent.FLAG_UPDATE_CURRENT);//处理点击
+        PendingIntent cancelPI = PendingIntent.getBroadcast(context, 0, cancelIT, PendingIntent.FLAG_UPDATE_CURRENT);//处理滑动取消
         nm.notify(nid, build(clickPI, cancelPI,
                 message.getTitle(),
                 message.getTitle(),
