@@ -76,7 +76,7 @@ public final class MPushService extends Service implements ClientListener {
                 MPush.I.client.start();
             }
             MPushFakeService.startForeground(this);
-            flags = START_STICKY;
+            flags = START_FLAG_REDELIVERY;
             SERVICE_START_DELAYED = 5;
             return super.onStartCommand(intent, flags, startId);
         } else {
